@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TabooLib-ItemTool:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TabooLib_ItemTool_jar</output-path>
+    <root id="archive" name="TabooLib-ItemTool.jar">
+      <element id="module-output" name="TabooLib-ItemTool" />
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/config.yml" />
+    </root>
+  </artifact>
+</component>

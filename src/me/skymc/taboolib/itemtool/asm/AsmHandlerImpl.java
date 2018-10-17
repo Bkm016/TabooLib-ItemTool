@@ -1,15 +1,19 @@
 package me.skymc.taboolib.itemtool.asm;
 
+import me.skymc.taboolib.TabooLib;
+import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.other.NumberUtils;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_12_R1.NBTTagLongArray;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.NumberConversions;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -19,11 +23,23 @@ import java.util.stream.IntStream;
 public class AsmHandlerImpl extends AsmHandler {
 
     private Field tagListField;
+    private Field intArrayDataField;
+    private Field byteArrayDataField;
+    private Field longArrayDataField;
 
     public AsmHandlerImpl() {
         try {
             tagListField = NBTTagList.class.getDeclaredField("list");
             tagListField.setAccessible(true);
+            intArrayDataField = NBTTagIntArray.class.getDeclaredField("data");
+            intArrayDataField.setAccessible(true);
+            byteArrayDataField = NBTTagByteArray.class.getDeclaredField("data");
+            byteArrayDataField.setAccessible(true);
+            // v1.12+
+            if (TabooLib.getVersionNumber() > 11200) {
+                longArrayDataField = NBTTagLongArray.class.getDeclaredFields()[0];
+                longArrayDataField.setAccessible(true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -63,7 +79,11 @@ public class AsmHandlerImpl extends AsmHandler {
         Object attributeModifiers = ((NBTTagCompound) itemTag).hasKey("AttributeModifiers") ? ((NBTTagCompound) itemTag).getList("AttributeModifiers", 10) : new NBTTagList();
         try {
             List list = new CopyOnWriteArrayList((List) tagListField.get(attributeModifiers));
-            IntStream.range(0, list.size()).filter(i -> list.get(i) instanceof NBTTagCompound && ((NBTTagCompound) list.get(i)).hasKey("AttributeName") && ((NBTTagCompound) list.get(i)).getString("AttributeName").equalsIgnoreCase(attribute)).forEach(list::remove);
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) instanceof NBTTagCompound && ((NBTTagCompound) list.get(i)).hasKey("AttributeName") && ((NBTTagCompound) list.get(i)).getString("AttributeName").equalsIgnoreCase(attribute)) {
+                    list.remove(i);
+                }
+            }
             tagListField.set(attributeModifiers, list);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -87,5 +107,88 @@ public class AsmHandlerImpl extends AsmHandler {
         Object nmsItem = CraftItemStack.asNMSCopy(itemStack);
         Object itemTag = ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).hasTag() ? ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).getTag() : new NBTTagCompound();
         return ((NBTTagCompound) itemTag).getString(key);
+    }
+
+    @Override
+    public void sendItemNBT(Player player, ItemStack itemStack) {
+        Object nmsItem = CraftItemStack.asNMSCopy(itemStack);
+        Object itemTag = ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).hasTag() ? ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).getTag() : new NBTTagCompound();
+        sendItemNBT(player, "NBT &8->&f", ((NBTTagCompound) itemTag), 0);
+    }
+
+    private void sendItemNBT(Player player, String key, NBTBase nbtBase, int node) {
+        if (nbtBase instanceof NBTTagCompound) {
+            if (((NBTTagCompound) nbtBase).c().isEmpty()) {
+                Message.send(player, getNodeSpace(node) + key + " {}");
+            } else {
+                Message.send(player, getNodeSpace(node) + key + (key.equals("-") ? " {" : ""));
+                for (String subKey : ((NBTTagCompound) nbtBase).c()) {
+                    sendItemNBT(player, subKey + ":", ((NBTTagCompound) nbtBase).get(subKey), node + 1);
+                }
+                if (key.equals("-")) {
+                    Message.send(player, getNodeSpace(node) + "}");
+                }
+            }
+        } else if (nbtBase instanceof NBTTagList) {
+            try {
+                List<NBTBase> tagList = (List<NBTBase>) tagListField.get(nbtBase);
+                if (tagList.isEmpty()) {
+                    Message.send(player, getNodeSpace(node) + key + " []");
+                } else {
+                    Message.send(player, getNodeSpace(node) + key);
+                    tagList.forEach(aTagList -> sendItemNBT(player, "-", aTagList, node));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else if (nbtBase instanceof NBTTagIntArray) {
+            try {
+                int[] array = (int[]) intArrayDataField.get(nbtBase);
+                if (array.length == 0) {
+                    Message.send(player, getNodeSpace(node) + key + " []");
+                } else {
+                    Message.send(player, getNodeSpace(node) + key);
+                    for (int var : array) {
+                        Message.send(player, getNodeSpace(node) + "- &f" + var);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else if (nbtBase instanceof NBTTagByteArray) {
+            try {
+                byte[] array = (byte[]) byteArrayDataField.get(nbtBase);
+                if (array.length == 0) {
+                    Message.send(player, getNodeSpace(node) + key + " []");
+                } else {
+                    Message.send(player, getNodeSpace(node) + key);
+                    for (byte var : array) {
+                        Message.send(player, getNodeSpace(node) + "- &f" + var);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else if (nbtBase.getClass().getSimpleName().equals("NBTTagLongArray")) {
+            try {
+                long[] array = (long[]) longArrayDataField.get(nbtBase);
+                if (array.length == 0) {
+                    Message.send(player, getNodeSpace(node) + key + " []");
+                } else {
+                    Message.send(player, getNodeSpace(node) + key);
+                    for (long var : array) {
+                        Message.send(player, getNodeSpace(node) + "- &f" + var);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Message.send(player, getNodeSpace(node) + key + " &f" + (nbtBase == null ? "" : nbtBase instanceof NBTTagString ? "&7\"&r" + nbtBase.toString().substring(1, nbtBase.toString().length() - 1) + "&7\"" : nbtBase.toString()));
+        }
+    }
+
+    private String getNodeSpace(int node) {
+        return IntStream.range(0, node).mapToObj(i -> "  ").collect(Collectors.joining());
     }
 }
