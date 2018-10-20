@@ -38,7 +38,7 @@ public class CommandNBT {
             .silence()
             .aliases("nbtClean")
             .permission("itemTool.use")
-            .description("查看物品详细 NBT 节点")
+            .description("移除物品所有 NBT 节点")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
