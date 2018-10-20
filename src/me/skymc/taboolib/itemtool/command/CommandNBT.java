@@ -27,7 +27,29 @@ public class CommandNBT {
                     Message.NO.play((Player) sender);
                 } else {
                     Message.YES.play((Player) sender);
+                    // Action
                     AsmHandler.getAsmHandler().sendItemNBT((Player) sender, ((Player) sender).getItemInHand());
+                }
+                return true;
+            });
+
+    @TInject
+    private static SimpleCommandBuilder nbtClear = SimpleCommandBuilder.create("nbtClear", ItemTool.getInst())
+            .silence()
+            .aliases("nbtClean")
+            .permission("itemTool.use")
+            .description("查看物品详细 NBT 节点")
+            .execute((sender, args) -> {
+                if (!(sender instanceof Player)) {
+                    Message.send(sender, "&cCommand disabled on console.");
+                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                    Message.send(sender, "&cInvalid item.");
+                    Message.NO.play((Player) sender);
+                } else {
+                    Message.send(sender, "NBT &8-> &4CLEAR");
+                    Message.ITEM_EDIT.play((Player) sender);
+                    // Action
+                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().clearNBT(((Player) sender).getItemInHand()));
                 }
                 return true;
             });

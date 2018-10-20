@@ -46,4 +46,6 @@ public abstract class AsmHandler {
     public String getItemTag(ItemStack itemStack, String key, String def) {
         return Optional.ofNullable(getItemTag(itemStack, key)).orElse(def);
     }
+
+    public abstract ItemStack clearNBT(ItemStack itemStack);
 }

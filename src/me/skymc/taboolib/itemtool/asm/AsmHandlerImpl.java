@@ -2,6 +2,7 @@ package me.skymc.taboolib.itemtool.asm;
 
 import me.skymc.taboolib.TabooLib;
 import me.skymc.taboolib.itemtool.util.Message;
+import me.skymc.taboolib.methods.ReflectionUtils;
 import me.skymc.taboolib.other.NumberUtils;
 import net.minecraft.server.v1_12_R1.NBTTagLongArray;
 import net.minecraft.server.v1_8_R3.*;
@@ -29,12 +30,9 @@ public class AsmHandlerImpl extends AsmHandler {
 
     public AsmHandlerImpl() {
         try {
-            tagListField = NBTTagList.class.getDeclaredField("list");
-            tagListField.setAccessible(true);
-            intArrayDataField = NBTTagIntArray.class.getDeclaredField("data");
-            intArrayDataField.setAccessible(true);
-            byteArrayDataField = NBTTagByteArray.class.getDeclaredField("data");
-            byteArrayDataField.setAccessible(true);
+            tagListField = ReflectionUtils.getField(NBTTagList.class, true, "list");
+            intArrayDataField = ReflectionUtils.getField(NBTTagIntArray.class, true, "data");
+            byteArrayDataField = ReflectionUtils.getField(NBTTagByteArray.class, true, "data");
             // v1.12+
             if (TabooLib.getVersionNumber() > 11200) {
                 longArrayDataField = NBTTagLongArray.class.getDeclaredFields()[0];
@@ -107,6 +105,13 @@ public class AsmHandlerImpl extends AsmHandler {
         Object nmsItem = CraftItemStack.asNMSCopy(itemStack);
         Object itemTag = ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).hasTag() ? ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).getTag() : new NBTTagCompound();
         return ((NBTTagCompound) itemTag).getString(key);
+    }
+
+    @Override
+    public ItemStack clearNBT(ItemStack itemStack) {
+        Object nmsItem = CraftItemStack.asNMSCopy(itemStack);
+        ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).setTag(new NBTTagCompound());
+        return CraftItemStack.asBukkitCopy(((net.minecraft.server.v1_8_R3.ItemStack) nmsItem));
     }
 
     @Override
