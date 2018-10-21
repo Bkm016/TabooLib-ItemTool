@@ -25,7 +25,7 @@ public class CommandAttribute {
                 } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
-                } else if (args.length < 2) {
+                } else if (args.length < 3) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else if (ItemUtils.asAttribute(args[0]) == null) {

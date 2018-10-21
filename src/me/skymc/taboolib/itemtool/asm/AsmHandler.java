@@ -18,8 +18,8 @@ public abstract class AsmHandler {
     public static void init() {
         try {
             asmHandler = (AsmHandler) SimpleVersionControl.create()
-                    .from("v1_8_R3")
-                    .from("v1_12_R1")
+                    .from("1_8_R3")
+                    .from("1_12_R1")
                     .target("me.skymc.taboolib.itemtool.asm.AsmHandlerImpl")
                     .useCache()
                     .translate(ItemTool.getInst())

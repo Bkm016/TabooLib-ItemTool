@@ -27,7 +27,7 @@ public class ItemTool extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!TabooLibSetup.checkVersion(this, 4.56)) {
+        if (!TabooLibSetup.checkVersion(this, 4.58)) {
             setEnabled(false);
             return;
         }

@@ -3,6 +3,7 @@ package me.skymc.taboolib.itemtool.asm;
 import me.skymc.taboolib.TabooLib;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.methods.ReflectionUtils;
+import me.skymc.taboolib.nms.NMSUtils;
 import me.skymc.taboolib.other.NumberUtils;
 import net.minecraft.server.v1_12_R1.NBTTagLongArray;
 import net.minecraft.server.v1_8_R3.*;
@@ -118,10 +119,10 @@ public class AsmHandlerImpl extends AsmHandler {
     public void sendItemNBT(Player player, ItemStack itemStack) {
         Object nmsItem = CraftItemStack.asNMSCopy(itemStack);
         Object itemTag = ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).hasTag() ? ((net.minecraft.server.v1_8_R3.ItemStack) nmsItem).getTag() : new NBTTagCompound();
-        sendItemNBT(player, "NBT &8->&f", ((NBTTagCompound) itemTag), 0);
+        sendItemNBT(player, "NBT &8->&f", itemTag, 0);
     }
 
-    private void sendItemNBT(Player player, String key, NBTBase nbtBase, int node) {
+    private void sendItemNBT(Player player, String key, Object nbtBase, int node) {
         if (nbtBase instanceof NBTTagCompound) {
             if (((NBTTagCompound) nbtBase).c().isEmpty()) {
                 Message.send(player, getNodeSpace(node) + key + " {}");
@@ -136,12 +137,12 @@ public class AsmHandlerImpl extends AsmHandler {
             }
         } else if (nbtBase instanceof NBTTagList) {
             try {
-                List<NBTBase> tagList = (List<NBTBase>) tagListField.get(nbtBase);
+                List tagList = (List) tagListField.get(nbtBase);
                 if (tagList.isEmpty()) {
                     Message.send(player, getNodeSpace(node) + key + " []");
                 } else {
                     Message.send(player, getNodeSpace(node) + key);
-                    tagList.forEach(aTagList -> sendItemNBT(player, "-", aTagList, node));
+                    tagList.forEach(aTagList -> sendItemNBT(player, "-", (NBTBase) aTagList, node));
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
