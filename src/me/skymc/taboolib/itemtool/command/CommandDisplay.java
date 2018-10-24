@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.NumberConversions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -248,6 +249,29 @@ public class CommandDisplay {
                         lore.set(i, lore.get(i).replaceAll(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1))));
                     }
                     itemMeta.setLore(lore);
+                    ((Player) sender).getItemInHand().setItemMeta(itemMeta);
+                }
+                return true;
+            });
+
+    @TInject
+    private static SimpleCommandBuilder clearLore = SimpleCommandBuilder.create("clearLore", ItemTool.getInst())
+            .silence()
+            .aliases("cleanLore")
+            .permission("itemTool.use")
+            .description("清除物品描述")
+            .execute((sender, args) -> {
+                if (!(sender instanceof Player)) {
+                    Message.send(sender, "&cCommand disabled on console.");
+                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                    Message.send(sender, "&cInvalid item.");
+                    Message.NO.play((Player) sender);
+                } else {
+                    Message.send(sender, "Lore &8-> &4CLEAR");
+                    Message.ITEM_EDIT.play((Player) sender);
+                    // Action
+                    ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
+                    itemMeta.setLore(new ArrayList<>());
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
                 return true;
