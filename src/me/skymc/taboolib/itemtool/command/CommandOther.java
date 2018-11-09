@@ -20,6 +20,7 @@ public class CommandOther {
     @TInject
     private static SimpleCommandBuilder setName = SimpleCommandBuilder.create("setSkullOwner", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置头颅皮肤")
             .execute((sender, args) -> {
@@ -45,6 +46,7 @@ public class CommandOther {
     @TInject
     private static SimpleCommandBuilder setArmorColor = SimpleCommandBuilder.create("setArmorColor", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置皮革颜色")
             .execute((sender, args) -> {

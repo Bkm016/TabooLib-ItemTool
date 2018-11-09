@@ -17,6 +17,7 @@ public class CommandAttribute {
     @TInject
     private static SimpleCommandBuilder setAttribute = SimpleCommandBuilder.create("addAttribute", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("添加物品属性")
             .execute((sender, args) -> {
@@ -43,6 +44,7 @@ public class CommandAttribute {
     @TInject
     private static SimpleCommandBuilder removeAttribute = SimpleCommandBuilder.create("removeAttribute", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("移除物品属性")
             .execute((sender, args) -> {

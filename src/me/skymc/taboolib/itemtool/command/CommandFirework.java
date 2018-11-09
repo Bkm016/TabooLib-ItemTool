@@ -22,6 +22,7 @@ public class CommandFirework {
     @TInject
     private static SimpleCommandBuilder setFireworkPower = SimpleCommandBuilder.create("setFireworkPower", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置烟花强度")
             .execute((sender, args) -> {
@@ -47,6 +48,7 @@ public class CommandFirework {
     @TInject
     private static SimpleCommandBuilder addFireworkEffect = SimpleCommandBuilder.create("addFireworkEffect", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("添加烟花效果")
             .execute((sender, args) -> {
@@ -82,6 +84,7 @@ public class CommandFirework {
     @TInject
     private static SimpleCommandBuilder removeFireworkEffect = SimpleCommandBuilder.create("removeFireworkEffect", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("删除烟花效果")
             .execute((sender, args) -> {

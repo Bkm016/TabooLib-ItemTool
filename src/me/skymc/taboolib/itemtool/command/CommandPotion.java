@@ -23,6 +23,7 @@ public class CommandPotion {
     @TInject
     private static SimpleCommandBuilder addPotion = SimpleCommandBuilder.create("addPotion", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("添加药水效果")
             .execute((sender, args) -> {
@@ -57,6 +58,7 @@ public class CommandPotion {
     @TInject
     private static SimpleCommandBuilder removePotion = SimpleCommandBuilder.create("removePotion", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("移除物品效果")
             .execute((sender, args) -> {
@@ -89,6 +91,7 @@ public class CommandPotion {
     @TInject
     private static SimpleCommandBuilder setPotionColor = SimpleCommandBuilder.create("setPotionColor", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置药水颜色")
             .execute((sender, args) -> {
@@ -120,6 +123,7 @@ public class CommandPotion {
     @TInject
     private static SimpleCommandBuilder setBasePotion = SimpleCommandBuilder.create("setBasePotion", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .aliases("setMainPotion")
             .permission("itemTool.use")
             .description("设置基础药水效果")

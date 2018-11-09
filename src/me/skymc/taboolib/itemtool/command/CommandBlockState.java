@@ -30,6 +30,7 @@ public class CommandBlockState implements Listener {
     @TInject
     private static SimpleCommandBuilder setChestContents = SimpleCommandBuilder.create("setChestContents", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置箱子内容")
             .execute((sender, args) -> {
@@ -54,6 +55,7 @@ public class CommandBlockState implements Listener {
     @TInject
     private static SimpleCommandBuilder setSpawnerType = SimpleCommandBuilder.create("setSpawnerType", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置刷怪笼类型")
             .execute((sender, args) -> {

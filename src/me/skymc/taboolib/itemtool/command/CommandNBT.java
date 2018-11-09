@@ -17,6 +17,7 @@ public class CommandNBT {
     @TInject
     private static SimpleCommandBuilder nbtInfo = SimpleCommandBuilder.create("nbtInfo", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("查看物品详细 NBT 节点")
             .execute((sender, args) -> {
@@ -36,6 +37,7 @@ public class CommandNBT {
     @TInject
     private static SimpleCommandBuilder nbtClear = SimpleCommandBuilder.create("nbtClear", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .aliases("nbtClean")
             .permission("itemTool.use")
             .description("移除物品所有 NBT 节点")

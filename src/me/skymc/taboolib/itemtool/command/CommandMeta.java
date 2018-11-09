@@ -23,6 +23,7 @@ public class CommandMeta {
     @TInject
     private static SimpleCommandBuilder addEnchant = SimpleCommandBuilder.create("addEnchant", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .aliases("enchant")
             .permission("itemTool.use")
             .description("添加物品附魔")
@@ -59,6 +60,7 @@ public class CommandMeta {
     @TInject
     private static SimpleCommandBuilder removeEnchant = SimpleCommandBuilder.create("removeEnchant", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("移除物品附魔")
             .execute((sender, args) -> {
@@ -91,6 +93,7 @@ public class CommandMeta {
     @TInject
     private static SimpleCommandBuilder addFlag = SimpleCommandBuilder.create("addFlag", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("添加物品标签")
             .execute((sender, args) -> {
@@ -123,6 +126,7 @@ public class CommandMeta {
     @TInject
     private static SimpleCommandBuilder removeFlag = SimpleCommandBuilder.create("removeFlag", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("移除物品标签")
             .execute((sender, args) -> {
@@ -155,6 +159,8 @@ public class CommandMeta {
     @TInject
     private static SimpleCommandBuilder setUnbreakable = SimpleCommandBuilder.create("setUnbreakable", ItemTool.getInst())
             .silence()
+            .forceRegister()
+            .aliases("unbreakable")
             .permission("itemTool.use")
             .description("设置物品无法破坏")
             .execute((sender, args) -> {

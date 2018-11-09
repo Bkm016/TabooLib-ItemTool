@@ -8,6 +8,7 @@ import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,12 +24,22 @@ public class CommandMain {
             .silence()
             .permission("itemTool.use")
             .execute((sender, args) -> {
-                Map<String, String> commands = TCommandHandler.getCommandMap().getCommands().stream().filter(command -> command instanceof PluginCommand && !command.getName().equals("itemTool") && ((PluginCommand) command).getPlugin().equals(ItemTool.getInst())).collect(Collectors.toMap(Command::getName, Command::getDescription, (a, b) -> b, Maps::newTreeMap));
-                Message.send(sender, "");
-                Message.send(sender, "&7&l----- &f&lTabooLib ItemTool Commands &7&l-----");
-                Message.send(sender, "");
-                commands.forEach((key, value) -> Message.send(sender, " §7/&f" + key + " &8- &7" + value));
-                Message.send(sender, "");
+                if (args.length == 0) {
+                    Map<String, String> commands = TCommandHandler.getCommandMap().getCommands().stream().filter(command -> command instanceof PluginCommand && !command.getName().equalsIgnoreCase("itemTool") && ((PluginCommand) command).getPlugin().equals(ItemTool.getInst())).collect(Collectors.toMap(Command::getName, Command::getDescription, (a, b) -> b, Maps::newTreeMap));
+                    Message.send(sender, "");
+                    Message.send(sender, "&7&l----- &f&lTabooLib ItemTool Commands &7&l-----");
+                    Message.send(sender, "");
+                    commands.forEach((key, value) -> Message.send(sender, " §7/&f" + key + " &8- &7" + value));
+                    Message.send(sender, "");
+                } else if (args[0].equalsIgnoreCase("undo")) {
+                    if (!(sender instanceof Player)) {
+                        Message.send(sender, "&cCommand disabled on console.");
+                        return true;
+                    }
+
+                } else {
+                    Message.send(sender, "&cInvalid arguments.");
+                }
                 return true;
             });
 

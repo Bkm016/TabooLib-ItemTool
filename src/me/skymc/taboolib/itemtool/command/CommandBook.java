@@ -21,6 +21,7 @@ public class CommandBook {
     @TInject
     private static SimpleCommandBuilder setName = SimpleCommandBuilder.create("setAuthor", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置书本作者")
             .execute((sender, args) -> {
@@ -46,6 +47,7 @@ public class CommandBook {
     @TInject
     private static SimpleCommandBuilder setGeneration = SimpleCommandBuilder.create("setGeneration", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置书本种类")
             .execute((sender, args) -> {

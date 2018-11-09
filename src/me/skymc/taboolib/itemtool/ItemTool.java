@@ -1,7 +1,6 @@
 package me.skymc.taboolib.itemtool;
 
 import me.skymc.taboolib.common.configuration.TConfiguration;
-import me.skymc.taboolib.itemtool.asm.AsmHandler;
 import me.skymc.taboolib.itemtool.util.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,11 +26,9 @@ public class ItemTool extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!TabooLibSetup.checkVersion(this, 4.58)) {
+        if (!TabooLibSetup.checkVersion(this, 4.61)) {
             setEnabled(false);
-            return;
         }
-        AsmHandler.init();
     }
 
     public static ItemTool getInst() {

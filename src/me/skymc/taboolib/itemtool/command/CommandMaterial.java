@@ -18,6 +18,7 @@ public class CommandMaterial {
     @TInject
     private static SimpleCommandBuilder setMaterial = SimpleCommandBuilder.create("setMaterial", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .aliases("setType")
             .permission("itemTool.use")
             .description("设置物品材质")
@@ -45,6 +46,7 @@ public class CommandMaterial {
     @TInject
     private static SimpleCommandBuilder setData = SimpleCommandBuilder.create("setDurability", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .aliases("setData", "setDamage")
             .permission("itemTool.use")
             .description("设置物品耐久")
@@ -72,6 +74,7 @@ public class CommandMaterial {
     @TInject
     private static SimpleCommandBuilder setAmount = SimpleCommandBuilder.create("setAmount", ItemTool.getInst())
             .silence()
+            .forceRegister()
             .permission("itemTool.use")
             .description("设置物品数量")
             .execute((sender, args) -> {

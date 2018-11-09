@@ -1,5 +1,6 @@
 package me.skymc.taboolib.itemtool.asm;
 
+import me.skymc.taboolib.common.function.TFunction;
 import me.skymc.taboolib.common.versioncontrol.SimpleVersionControl;
 import me.skymc.taboolib.itemtool.ItemTool;
 import org.bukkit.entity.Player;
@@ -11,26 +12,17 @@ import java.util.Optional;
  * @Author 坏黑
  * @Since 2018-10-14 16:22
  */
+@TFunction(enable = "init")
 public abstract class AsmHandler {
 
     private static AsmHandler asmHandler;
 
-    public static void init() {
+    static void init() {
         try {
-            asmHandler = (AsmHandler) SimpleVersionControl.create()
-                    .from("1_8_R3")
-                    .from("1_12_R1")
-                    .target("me.skymc.taboolib.itemtool.asm.AsmHandlerImpl")
-                    .useCache()
-                    .translate(ItemTool.getInst())
-                    .newInstance();
+            asmHandler = (AsmHandler) SimpleVersionControl.createNMS("me.skymc.taboolib.itemtool.asm.AsmHandlerImpl").useCache() .translate(ItemTool.getInst()).newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static AsmHandler getAsmHandler() {
-        return asmHandler;
     }
 
     public abstract void sendItemNBT(Player player, ItemStack itemStack);
@@ -43,9 +35,13 @@ public abstract class AsmHandler {
 
     public abstract String getItemTag(ItemStack itemStack, String key);
 
+    public abstract ItemStack clearNBT(ItemStack itemStack);
+
     public String getItemTag(ItemStack itemStack, String key, String def) {
         return Optional.ofNullable(getItemTag(itemStack, key)).orElse(def);
     }
 
-    public abstract ItemStack clearNBT(ItemStack itemStack);
+    public static AsmHandler getAsmHandler() {
+        return asmHandler;
+    }
 }
