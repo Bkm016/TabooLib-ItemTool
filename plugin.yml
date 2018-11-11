@@ -1,6 +1,6 @@
 name: ItemTool
 main: me.skymc.taboolib.itemtool.ItemTool
-version: 1.2
+version: 1.21
 
 author: [坏黑]
 depend: [TabooLib]

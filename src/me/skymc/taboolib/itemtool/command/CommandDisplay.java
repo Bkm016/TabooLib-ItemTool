@@ -163,7 +163,7 @@ public class CommandDisplay {
                     while (lore.size() < NumberConversions.toInt(args[0])) {
                         lore.add("");
                     }
-                    if (lore.size() == NumberConversions.toInt(args[0])) {
+                    if (lore.size() == NumberConversions.toInt(args[0]) - 1) {
                         lore.set(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1)));
                     } else {
                         lore.add(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1)));
