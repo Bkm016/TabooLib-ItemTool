@@ -151,10 +151,10 @@ public class CommandDisplay {
                 } else if (args.length < 2) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (!Util.isNumber(args[0])) {
+                } else if (!Util.isNumber(args[0]) ||  NumberConversions.toInt(args[0]) < 1) {
                     Message.send(sender, "&cInvalid line.");
                     Message.NO.play((Player) sender);
-                }else {
+                } else {
                     Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8+ &f" + ArrayUtils.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
