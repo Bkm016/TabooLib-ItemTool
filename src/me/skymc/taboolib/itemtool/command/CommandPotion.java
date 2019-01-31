@@ -1,5 +1,6 @@
 package me.skymc.taboolib.itemtool.command;
 
+import com.google.common.collect.Lists;
 import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
 import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.inventory.ItemUtils;
@@ -7,12 +8,16 @@ import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.itemtool.util.Util;
 import me.skymc.taboolib.other.NumberUtils;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.NumberConversions;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑
@@ -26,6 +31,12 @@ public class CommandPotion {
             .forceRegister()
             .permission("itemTool.use")
             .description("添加药水效果")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(PotionType.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
@@ -61,6 +72,12 @@ public class CommandPotion {
             .forceRegister()
             .permission("itemTool.use")
             .description("移除物品效果")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(PotionType.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
@@ -127,6 +144,12 @@ public class CommandPotion {
             .aliases("setMainPotion")
             .permission("itemTool.use")
             .description("设置基础药水效果")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(PotionType.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");

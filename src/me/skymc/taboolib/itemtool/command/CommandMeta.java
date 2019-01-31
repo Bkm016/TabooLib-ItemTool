@@ -1,11 +1,13 @@
 package me.skymc.taboolib.itemtool.command;
 
+import com.google.common.collect.Lists;
 import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
 import me.skymc.taboolib.common.inject.TInject;
 import me.skymc.taboolib.inventory.ItemUtils;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.other.NumberUtils;
+import org.bukkit.FireworkEffect;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -13,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.NumberConversions;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * @Author 坏黑
@@ -27,6 +30,12 @@ public class CommandMeta {
             .aliases("enchant")
             .permission("itemTool.use")
             .description("添加物品附魔")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(Enchantment.values()).filter(type -> type.getName().toUpperCase().startsWith(args[0].toUpperCase())).map(Enchantment::getName).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
@@ -63,6 +72,12 @@ public class CommandMeta {
             .forceRegister()
             .permission("itemTool.use")
             .description("移除物品附魔")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(Enchantment.values()).filter(type -> type.getName().toUpperCase().startsWith(args[0].toUpperCase())).map(Enchantment::getName).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
@@ -96,6 +111,12 @@ public class CommandMeta {
             .forceRegister()
             .permission("itemTool.use")
             .description("添加物品标签")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(ItemFlag.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
