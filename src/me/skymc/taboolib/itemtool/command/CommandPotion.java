@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import org.bukkit.util.NumberConversions;
 
@@ -33,7 +34,7 @@ public class CommandPotion {
             .description("添加药水效果")
             .tab((sender, args) -> {
                 if (args.length == 1) {
-                    return Arrays.stream(PotionType.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                    return Arrays.stream(PotionEffectType.values()).filter(type -> type != null && type.getName().toUpperCase().startsWith(args[0].toUpperCase())).map(PotionEffectType::getName).collect(Collectors.toList());
                 }
                 return Lists.newArrayList();
             })
@@ -52,7 +53,7 @@ public class CommandPotion {
                 } else if (NumberConversions.toInt(args[1]) <= 0) {
                     Message.send(sender, "&cInvalid PotionEffect duration.");
                     Message.NO.play((Player) sender);
-                } else if (NumberConversions.toInt(args[2]) <= 0) {
+                } else if (NumberConversions.toInt(args[2]) < 0) {
                     Message.send(sender, "&cInvalid PotionEffect amplifier.");
                     Message.NO.play((Player) sender);
                 } else {
@@ -74,7 +75,7 @@ public class CommandPotion {
             .description("移除物品效果")
             .tab((sender, args) -> {
                 if (args.length == 1) {
-                    return Arrays.stream(PotionType.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                    return Arrays.stream(PotionEffectType.values()).filter(type -> type != null && type.getName().toUpperCase().startsWith(args[0].toUpperCase())).map(PotionEffectType::getName).collect(Collectors.toList());
                 }
                 return Lists.newArrayList();
             })

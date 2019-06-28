@@ -150,6 +150,12 @@ public class CommandMeta {
             .forceRegister()
             .permission("itemTool.use")
             .description("移除物品标签")
+            .tab((sender, args) -> {
+                if (args.length == 1) {
+                    return Arrays.stream(ItemFlag.values()).filter(type -> type.name().toUpperCase().startsWith(args[0].toUpperCase())).map(Enum::name).collect(Collectors.toList());
+                }
+                return Lists.newArrayList();
+            })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");

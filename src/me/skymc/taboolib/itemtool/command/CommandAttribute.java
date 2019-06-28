@@ -71,7 +71,7 @@ public class CommandAttribute {
             .description("移除物品属性")
             .tab((sender, args) -> {
                 if (args.length == 1) {
-                    return Arrays.stream(ARGUMENTS[1]).filter(argument -> argument.startsWith(args[0].toLowerCase())).collect(Collectors.toList());
+                    return Arrays.stream(ARGUMENTS[0]).filter(argument -> argument.startsWith(args[0].toLowerCase())).collect(Collectors.toList());
                 }
                 return Lists.newArrayList();
             })

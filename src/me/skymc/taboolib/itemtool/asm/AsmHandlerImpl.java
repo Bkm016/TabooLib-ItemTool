@@ -14,6 +14,7 @@ import org.bukkit.util.NumberConversions;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -124,11 +125,12 @@ public class AsmHandlerImpl extends AsmHandler {
 
     private void sendItemNBT(Player player, String key, Object nbtBase, int node) {
         if (nbtBase instanceof NBTTagCompound) {
-            if (((NBTTagCompound) nbtBase).c().isEmpty()) {
+            Set<String> keys = TabooLib.getVersionNumber() >= 11300 ? ((net.minecraft.server.v1_13_R1.NBTTagCompound) nbtBase).getKeys() : ((NBTTagCompound) nbtBase).c();
+            if (keys.isEmpty()) {
                 Message.send(player, getNodeSpace(node) + key + " {}");
             } else {
                 Message.send(player, getNodeSpace(node) + key + (key.equals("-") ? " {" : ""));
-                for (String subKey : ((NBTTagCompound) nbtBase).c()) {
+                for (String subKey : keys) {
                     sendItemNBT(player, subKey + ":", ((NBTTagCompound) nbtBase).get(subKey), node + 1);
                 }
                 if (key.equals("-")) {
