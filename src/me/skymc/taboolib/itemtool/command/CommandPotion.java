@@ -1,14 +1,14 @@
 package me.skymc.taboolib.itemtool.command;
 
 import com.google.common.collect.Lists;
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.util.item.Items;
+import io.izzel.taboolib.util.lite.Numbers;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.itemtool.util.Util;
-import me.skymc.taboolib.other.NumberUtils;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
@@ -27,8 +27,7 @@ import java.util.stream.Collectors;
 public class CommandPotion {
 
     @TInject
-    private static SimpleCommandBuilder addPotion = SimpleCommandBuilder.create("addPotion", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder addPotion = CommandBuilder.create("addPotion", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("添加药水效果")
@@ -41,13 +40,13 @@ public class CommandPotion {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 3) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (ItemUtils.asPotionEffectType(args[0].toUpperCase()) == null) {
+                } else if (Items.asPotionEffectType(args[0].toUpperCase()) == null) {
                     Message.send(sender, "&cInvalid PotionEffect type.");
                     Message.NO.play((Player) sender);
                 } else if (NumberConversions.toInt(args[1]) <= 0) {
@@ -61,15 +60,13 @@ public class CommandPotion {
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     PotionMeta itemMeta = (PotionMeta) ((Player) sender).getItemInHand().getItemMeta();
-                    itemMeta.addCustomEffect(new PotionEffect(ItemUtils.asPotionEffectType(args[0].toUpperCase()), NumberConversions.toInt(args[1]), NumberConversions.toInt(args[2])), true);
+                    itemMeta.addCustomEffect(new PotionEffect(Items.asPotionEffectType(args[0].toUpperCase()), NumberConversions.toInt(args[1]), NumberConversions.toInt(args[2])), true);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder removePotion = SimpleCommandBuilder.create("removePotion", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder removePotion = CommandBuilder.create("removePotion", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("移除物品效果")
@@ -82,13 +79,13 @@ public class CommandPotion {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (!args[0].equalsIgnoreCase("all") && ItemUtils.asPotionEffectType(args[0].toUpperCase()) == null) {
+                } else if (!args[0].equalsIgnoreCase("all") && Items.asPotionEffectType(args[0].toUpperCase()) == null) {
                     Message.send(sender, "&cInvalid PotionEffect type.");
                     Message.NO.play((Player) sender);
                 } else {
@@ -99,23 +96,21 @@ public class CommandPotion {
                     if (args[0].equalsIgnoreCase("all")) {
                         itemMeta.clearCustomEffects();
                     } else {
-                        itemMeta.removeCustomEffect(ItemUtils.asPotionEffectType(args[0].toUpperCase()));
+                        itemMeta.removeCustomEffect(Items.asPotionEffectType(args[0].toUpperCase()));
                     }
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setPotionColor = SimpleCommandBuilder.create("setPotionColor", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setPotionColor = CommandBuilder.create("setPotionColor", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置药水颜色")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -125,22 +120,26 @@ public class CommandPotion {
                     Message.send(sender, "&cInvalid PotionEffect color.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "PotionColor §8-> &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
-                    // Action
+                    Color color;
+                    if (args[0].equalsIgnoreCase("r") || args[0].equalsIgnoreCase("random")) {
+                        color = Color.fromBGR(Numbers.getRandom().nextInt(255), Numbers.getRandom().nextInt(255), Numbers.getRandom().nextInt(255));
+                    } else {
+                        color = Items.asColor(args[0]);
+                    }
                     PotionMeta itemMeta = (PotionMeta) ((Player) sender).getItemInHand().getItemMeta();
                     try {
-                        itemMeta.setColor(ItemUtils.asColor(args[0]));
+                        itemMeta.setColor(color);
                     } catch (Throwable ignored) {
                     }
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
+                    // Message
+                    Message.send(sender, "PotionColor §8-> &f" + color.getBlue() + "-" + color.getGreen() + "-" + color.getRed());
+                    Message.ITEM_EDIT.play((Player) sender);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setBasePotion = SimpleCommandBuilder.create("setBasePotion", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setBasePotion = CommandBuilder.create("setBasePotion", ItemTool.getInst())
             .forceRegister()
             .aliases("setMainPotion")
             .permission("itemTool.use")
@@ -154,19 +153,19 @@ public class CommandPotion {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 3) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (PotionType.getByEffect(ItemUtils.asPotionEffectType(args[0].toUpperCase())) == null) {
+                } else if (PotionType.getByEffect(Items.asPotionEffectType(args[0].toUpperCase())) == null) {
                     Message.send(sender, "&cInvalid PotionEffect type.");
                     Message.NO.play((Player) sender);
                 } else {
                     PotionMeta itemMeta = (PotionMeta) ((Player) sender).getItemInHand().getItemMeta();
                     try {
-                        itemMeta.setBasePotionData(new PotionData(PotionType.getByEffect(ItemUtils.asPotionEffectType(args[0].toUpperCase())), NumberUtils.getBooleanAbbreviation(args[1]), NumberUtils.getBooleanAbbreviation(args[2])));
+                        itemMeta.setBasePotionData(new PotionData(PotionType.getByEffect(Items.asPotionEffectType(args[0].toUpperCase())), Numbers.getBoolean(args[1]), Numbers.getBoolean(args[2])));
                         // Notify
                         Message.send(sender, "BasePotionEffect §8-> &f" + args[0].toUpperCase() + ":" + args[1] + ":" + args[2]);
                         Message.ITEM_EDIT.play((Player) sender);
@@ -186,7 +185,7 @@ public class CommandPotion {
                                 break;
                             default:
                                 try {
-                                    itemMeta.setMainEffect(ItemUtils.asPotionEffectType(args[0].toUpperCase()));
+                                    itemMeta.setMainEffect(Items.asPotionEffectType(args[0].toUpperCase()));
                                 } catch (Throwable ignored2) {
                                 }
                                 // Notify
@@ -197,7 +196,6 @@ public class CommandPotion {
                     }
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
 }

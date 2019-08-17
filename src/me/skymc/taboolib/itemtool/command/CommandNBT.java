@@ -1,8 +1,8 @@
 package me.skymc.taboolib.itemtool.command;
 
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.util.item.Items;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.asm.AsmHandler;
 import me.skymc.taboolib.itemtool.util.Message;
@@ -15,15 +15,14 @@ import org.bukkit.entity.Player;
 public class CommandNBT {
 
     @TInject
-    private static SimpleCommandBuilder nbtInfo = SimpleCommandBuilder.create("nbtInfo", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder nbtInfo = CommandBuilder.create("nbtInfo", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("查看物品详细 NBT 节点")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else {
@@ -31,12 +30,10 @@ public class CommandNBT {
                     // Action
                     AsmHandler.getAsmHandler().sendItemNBT((Player) sender, ((Player) sender).getItemInHand());
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder nbtClear = SimpleCommandBuilder.create("nbtClear", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder nbtClear = CommandBuilder.create("nbtClear", ItemTool.getInst())
             .forceRegister()
             .aliases("nbtClean")
             .permission("itemTool.use")
@@ -44,7 +41,7 @@ public class CommandNBT {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else {
@@ -53,6 +50,5 @@ public class CommandNBT {
                     // Action
                     ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().clearNBT(((Player) sender).getItemInHand()));
                 }
-                return true;
             });
 }

@@ -1,8 +1,8 @@
 package me.skymc.taboolib.itemtool.command;
 
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.util.item.Items;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.itemtool.util.Util;
@@ -16,8 +16,7 @@ import org.bukkit.util.NumberConversions;
 public class CommandMaterial {
 
     @TInject
-    private static SimpleCommandBuilder setMaterial = SimpleCommandBuilder.create("setMaterial", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setMaterial = CommandBuilder.create("setMaterial", ItemTool.getInst())
             .forceRegister()
             .aliases("setType")
             .permission("itemTool.use")
@@ -25,27 +24,25 @@ public class CommandMaterial {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (ItemUtils.asMaterial(args[0].toUpperCase()) == null) {
+                } else if (Items.asMaterial(args[0].toUpperCase()) == null) {
                     Message.send(sender, "&cInvalid Material.");
                     Message.NO.play((Player) sender);
                 } else {
                     Message.send(sender, "Material §8-> &f" + args[0].toUpperCase());
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
-                    ((Player) sender).getItemInHand().setType(ItemUtils.asMaterial(args[0].toUpperCase()));
+                    ((Player) sender).getItemInHand().setType(Items.asMaterial(args[0].toUpperCase()));
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setData = SimpleCommandBuilder.create("setDurability", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setData = CommandBuilder.create("setDurability", ItemTool.getInst())
             .forceRegister()
             .aliases("setData", "setDamage")
             .permission("itemTool.use")
@@ -53,7 +50,7 @@ public class CommandMaterial {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -68,19 +65,17 @@ public class CommandMaterial {
                     // Action
                     ((Player) sender).getItemInHand().setDurability(NumberConversions.toShort(args[0]));
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setAmount = SimpleCommandBuilder.create("setAmount", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setAmount = CommandBuilder.create("setAmount", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置物品数量")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -95,6 +90,5 @@ public class CommandMaterial {
                     // Action
                     ((Player) sender).getItemInHand().setAmount(NumberConversions.toInt(args[0]));
                 }
-                return true;
             });
 }

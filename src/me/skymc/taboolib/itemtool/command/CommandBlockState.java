@@ -1,12 +1,12 @@
 package me.skymc.taboolib.itemtool.command;
 
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.inject.TListener;
+import io.izzel.taboolib.util.item.Items;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.itemtool.util.Util;
-import me.skymc.taboolib.listener.TListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -28,15 +28,14 @@ import org.bukkit.util.NumberConversions;
 public class CommandBlockState implements Listener {
 
     @TInject
-    private static SimpleCommandBuilder setChestContents = SimpleCommandBuilder.create("setChestContents", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setChestContents = CommandBuilder.create("setChestContents", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置箱子内容")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !ChestContents.isChest(((Player) sender).getItemInHand().getType())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !ChestContents.isChest(((Player) sender).getItemInHand().getType())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else {
@@ -49,19 +48,17 @@ public class CommandBlockState implements Listener {
                     inventory.setContents(blockState.getInventory().getContents());
                     ((Player) sender).openInventory(inventory);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setSpawnerType = SimpleCommandBuilder.create("setSpawnerType", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setSpawnerType = CommandBuilder.create("setSpawnerType", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置刷怪笼类型")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.MOB_SPAWNER) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.MOB_SPAWNER) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -80,18 +77,16 @@ public class CommandBlockState implements Listener {
                     itemMeta.setBlockState(blockState);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setSpawnerDelay = SimpleCommandBuilder.create("setSpawnerDelay", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setSpawnerDelay = CommandBuilder.create("setSpawnerDelay", ItemTool.getInst())
             .permission("itemTool.use")
             .description("设置刷怪笼间隔")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.MOB_SPAWNER) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.MOB_SPAWNER) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -110,7 +105,6 @@ public class CommandBlockState implements Listener {
                     itemMeta.setBlockState(blockState);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @EventHandler

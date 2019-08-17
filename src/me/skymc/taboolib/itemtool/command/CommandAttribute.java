@@ -1,9 +1,9 @@
 package me.skymc.taboolib.itemtool.command;
 
 import com.google.common.collect.Lists;
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.util.item.Items;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.asm.AsmHandler;
 import me.skymc.taboolib.itemtool.util.Message;
@@ -28,8 +28,7 @@ public class CommandAttribute {
     };
 
     @TInject
-    private static SimpleCommandBuilder setAttribute = SimpleCommandBuilder.create("addAttribute", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setAttribute = CommandBuilder.create("addAttribute", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("添加物品属性")
@@ -45,27 +44,25 @@ public class CommandAttribute {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 3) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (ItemUtils.asAttribute(args[0]) == null) {
+                } else if (Items.asAttribute(args[0]) == null) {
                     Message.send(sender, "&cInvalid Attribtue.");
                     Message.NO.play((Player) sender);
                 } else {
                     Message.send(sender, "Attribute &8+ &f" + args[0].toUpperCase() + ":" + args[1].toUpperCase() + ":" + args[2]);
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
-                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().addAttribute(((Player) sender).getItemInHand(), ItemUtils.asAttribute(args[0]), args[2], args[1].toLowerCase()));
+                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().addAttribute(((Player) sender).getItemInHand(), Items.asAttribute(args[0]), args[2], args[1].toLowerCase()));
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder removeAttribute = SimpleCommandBuilder.create("removeAttribute", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder removeAttribute = CommandBuilder.create("removeAttribute", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("移除物品属性")
@@ -78,21 +75,20 @@ public class CommandAttribute {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
-                } else if (ItemUtils.asAttribute(args[0]) == null) {
+                } else if (Items.asAttribute(args[0]) == null) {
                     Message.send(sender, "&cInvalid Attribtue.");
                     Message.NO.play((Player) sender);
                 } else {
                     Message.send(sender, "Attribute &8- &f" + args[0].toUpperCase());
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
-                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().removeAttribtue(((Player) sender).getItemInHand(), ItemUtils.asAttribute(args[0])));
+                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().removeAttribtue(((Player) sender).getItemInHand(), Items.asAttribute(args[0])));
                 }
-                return true;
             });
 }

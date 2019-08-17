@@ -1,7 +1,7 @@
 package me.skymc.taboolib.itemtool.asm;
 
-import me.skymc.taboolib.common.function.TFunction;
-import me.skymc.taboolib.common.versioncontrol.SimpleVersionControl;
+import io.izzel.taboolib.module.inject.TFunction;
+import io.izzel.taboolib.module.lite.SimpleVersionControl;
 import me.skymc.taboolib.itemtool.ItemTool;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

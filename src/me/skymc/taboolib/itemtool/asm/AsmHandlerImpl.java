@@ -1,10 +1,9 @@
 package me.skymc.taboolib.itemtool.asm;
 
-import me.skymc.taboolib.TabooLib;
+import io.izzel.taboolib.Version;
+import io.izzel.taboolib.util.Reflection;
+import io.izzel.taboolib.util.lite.Numbers;
 import me.skymc.taboolib.itemtool.util.Message;
-import me.skymc.taboolib.methods.ReflectionUtils;
-import me.skymc.taboolib.nms.NMSUtils;
-import me.skymc.taboolib.other.NumberUtils;
 import net.minecraft.server.v1_12_R1.NBTTagLongArray;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -32,11 +31,11 @@ public class AsmHandlerImpl extends AsmHandler {
 
     public AsmHandlerImpl() {
         try {
-            tagListField = ReflectionUtils.getField(NBTTagList.class, true, "list");
-            intArrayDataField = ReflectionUtils.getField(NBTTagIntArray.class, true, "data");
-            byteArrayDataField = ReflectionUtils.getField(NBTTagByteArray.class, true, "data");
+            tagListField = Reflection.getField(NBTTagList.class, true, "list");
+            intArrayDataField = Reflection.getField(NBTTagIntArray.class, true, "data");
+            byteArrayDataField = Reflection.getField(NBTTagByteArray.class, true, "data");
             // v1.12+
-            if (TabooLib.getVersionNumber() > 11200) {
+            if (Version.isAfter(Version.v1_13)) {
                 longArrayDataField = NBTTagLongArray.class.getDeclaredFields()[0];
                 longArrayDataField.setAccessible(true);
             }
@@ -53,8 +52,8 @@ public class AsmHandlerImpl extends AsmHandler {
         Object attributeModifiers = ((NBTTagCompound) itemTag).hasKey("AttributeModifiers") ? ((NBTTagCompound) itemTag).getList("AttributeModifiers", 10) : new NBTTagList();
         ((NBTTagCompound) attribtueCompound).setString("Name", attribtue);
         ((NBTTagCompound) attribtueCompound).setString("AttributeName", attribtue);
-        ((NBTTagCompound) attribtueCompound).setInt("UUIDMost", NumberUtils.getRandom().nextInt(Integer.MAX_VALUE));
-        ((NBTTagCompound) attribtueCompound).setInt("UUIDLeast", NumberUtils.getRandom().nextInt(Integer.MAX_VALUE));
+        ((NBTTagCompound) attribtueCompound).setInt("UUIDMost", Numbers.getRandom().nextInt(Integer.MAX_VALUE));
+        ((NBTTagCompound) attribtueCompound).setInt("UUIDLeast", Numbers.getRandom().nextInt(Integer.MAX_VALUE));
         if (value.endsWith("%")) {
             ((NBTTagCompound) attribtueCompound).setInt("Operation", 1);
             ((NBTTagCompound) attribtueCompound).setDouble("Amount", NumberConversions.toDouble(value.substring(0, value.length() - 1)) / 100.0D);
@@ -125,7 +124,7 @@ public class AsmHandlerImpl extends AsmHandler {
 
     private void sendItemNBT(Player player, String key, Object nbtBase, int node) {
         if (nbtBase instanceof NBTTagCompound) {
-            Set<String> keys = TabooLib.getVersionNumber() >= 11300 ? ((net.minecraft.server.v1_13_R1.NBTTagCompound) nbtBase).getKeys() : ((NBTTagCompound) nbtBase).c();
+            Set<String> keys = Version.isAfter(Version.v1_13) ? ((net.minecraft.server.v1_13_R1.NBTTagCompound) nbtBase).getKeys() : ((NBTTagCompound) nbtBase).c();
             if (keys.isEmpty()) {
                 Message.send(player, getNodeSpace(node) + key + " {}");
             } else {

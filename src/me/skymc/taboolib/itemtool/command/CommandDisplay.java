@@ -1,14 +1,14 @@
 package me.skymc.taboolib.itemtool.command;
 
 import com.google.common.collect.Lists;
-import com.ilummc.tlib.resources.TLocale;
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.ArrayUtil;
+import io.izzel.taboolib.util.item.Items;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.itemtool.util.Util;
-import me.skymc.taboolib.string.ArrayUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.NumberConversions;
@@ -23,129 +23,120 @@ import java.util.List;
 public class CommandDisplay {
 
     @TInject
-    private static SimpleCommandBuilder setName = SimpleCommandBuilder.create("setName", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setName = CommandBuilder.create("setName", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置物品名称")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Name §8-> &f" + ArrayUtils.arrayJoin(args, 0));
+                    Message.send(sender, "Name §8-> &f" + ArrayUtil.arrayJoin(args, 0));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
-                    itemMeta.setDisplayName(TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 0)));
+                    itemMeta.setDisplayName(TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 0)));
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder replaceName = SimpleCommandBuilder.create("replaceName", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder replaceName = CommandBuilder.create("replaceName", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("替换物品名称")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 2) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtils.arrayJoin(args, 1));
+                    Message.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
                     if (itemMeta.hasDisplayName()) {
-                        itemMeta.setDisplayName(itemMeta.getDisplayName().replace(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1))));
+                        itemMeta.setDisplayName(itemMeta.getDisplayName().replace(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1))));
                     }
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder replaceNameRegex = SimpleCommandBuilder.create("replaceNameRegex", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder replaceNameRegex = CommandBuilder.create("replaceNameRegex", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("替换物品名称（Regex）")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 2) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtils.arrayJoin(args, 1));
+                    Message.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
                     if (itemMeta.hasDisplayName()) {
-                        itemMeta.setDisplayName(itemMeta.getDisplayName().replaceAll(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1))));
+                        itemMeta.setDisplayName(itemMeta.getDisplayName().replaceAll(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1))));
                     }
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder addLore = SimpleCommandBuilder.create("addLore", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder addLore = CommandBuilder.create("addLore", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("添加物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore §8+ &f" + ArrayUtils.arrayJoin(args, 0));
+                    Message.send(sender, "Lore §8+ &f" + ArrayUtil.arrayJoin(args, 0));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
-                    lore.add(TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 0)));
+                    lore.add(TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 0)));
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder insertLore = SimpleCommandBuilder.create("insertLore", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder insertLore = CommandBuilder.create("insertLore", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("插入物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 2) {
@@ -155,7 +146,7 @@ public class CommandDisplay {
                     Message.send(sender, "&cInvalid line.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8+ &f" + ArrayUtils.arrayJoin(args, 1));
+                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8+ &f" + ArrayUtil.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
@@ -164,26 +155,24 @@ public class CommandDisplay {
                         lore.add("");
                     }
                     if (lore.size() == NumberConversions.toInt(args[0]) - 1) {
-                        lore.set(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1)));
+                        lore.set(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1)));
                     } else {
-                        lore.add(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1)));
+                        lore.add(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1)));
                     }
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setLore = SimpleCommandBuilder.create("setLore", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setLore = CommandBuilder.create("setLore", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 2) {
@@ -193,7 +182,7 @@ public class CommandDisplay {
                     Message.send(sender, "&cInvalid line.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8-> &f" + ArrayUtils.arrayJoin(args, 1));
+                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8-> &f" + ArrayUtil.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
@@ -201,23 +190,21 @@ public class CommandDisplay {
                     while (lore.size() < NumberConversions.toInt(args[0])) {
                         lore.add("");
                     }
-                    lore.set(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1)));
+                    lore.set(NumberConversions.toInt(args[0]) - 1, TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1)));
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder removeLore = SimpleCommandBuilder.create("removeLore", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder removeLore = CommandBuilder.create("removeLore", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("移除物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -238,72 +225,66 @@ public class CommandDisplay {
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder replaceLore = SimpleCommandBuilder.create("replaceLore", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder replaceLore = CommandBuilder.create("replaceLore", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("替换物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 2) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtils.arrayJoin(args, 1));
+                    Message.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
                     for (int i = 0; i < lore.size(); i++) {
-                        lore.set(i, lore.get(i).replace(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1))));
+                        lore.set(i, lore.get(i).replace(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1))));
                     }
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder replaceLoreRegex = SimpleCommandBuilder.create("replaceLoreRegex", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder replaceLoreRegex = CommandBuilder.create("replaceLoreRegex", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("替换物品描述（Regex）")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length < 2) {
                     Message.send(sender, "&cInvalid arguments.");
                     Message.NO.play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtils.arrayJoin(args, 1));
+                    Message.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
                     Message.ITEM_EDIT.play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
                     for (int i = 0; i < lore.size(); i++) {
-                        lore.set(i, lore.get(i).replaceAll(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtils.arrayJoin(args, 1))));
+                        lore.set(i, lore.get(i).replaceAll(TLocale.Translate.setColored(args[0]), TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 1))));
                     }
                     itemMeta.setLore(lore);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder clearLore = SimpleCommandBuilder.create("clearLore", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder clearLore = CommandBuilder.create("clearLore", ItemTool.getInst())
             .forceRegister()
             .aliases("cleanLore")
             .permission("itemTool.use")
@@ -311,7 +292,7 @@ public class CommandDisplay {
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand())) {
+                } else if (Items.isNull(((Player) sender).getItemInHand())) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else {
@@ -322,6 +303,5 @@ public class CommandDisplay {
                     itemMeta.setLore(new ArrayList<>());
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 }

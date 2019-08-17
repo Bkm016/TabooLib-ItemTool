@@ -1,8 +1,8 @@
 package me.skymc.taboolib.itemtool.command;
 
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.common.inject.TInject;
-import me.skymc.taboolib.inventory.ItemUtils;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
+import io.izzel.taboolib.util.item.Items;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import me.skymc.taboolib.itemtool.util.Util;
@@ -18,15 +18,14 @@ import org.bukkit.inventory.meta.SkullMeta;
 public class CommandOther {
 
     @TInject
-    private static SimpleCommandBuilder setName = SimpleCommandBuilder.create("setSkullOwner", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setName = CommandBuilder.create("setSkullOwner", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置头颅皮肤")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof SkullMeta)) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof SkullMeta)) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -40,19 +39,17 @@ public class CommandOther {
                     itemMeta.setOwner(args[0]);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 
     @TInject
-    private static SimpleCommandBuilder setArmorColor = SimpleCommandBuilder.create("setArmorColor", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder setArmorColor = CommandBuilder.create("setArmorColor", ItemTool.getInst())
             .forceRegister()
             .permission("itemTool.use")
             .description("设置皮革颜色")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
                     Message.send(sender, "&cCommand disabled on console.");
-                } else if (ItemUtils.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof LeatherArmorMeta)) {
+                } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof LeatherArmorMeta)) {
                     Message.send(sender, "&cInvalid item.");
                     Message.NO.play((Player) sender);
                 } else if (args.length == 0) {
@@ -67,6 +64,5 @@ public class CommandOther {
                     itemMeta.setColor(color);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
-                return true;
             });
 }

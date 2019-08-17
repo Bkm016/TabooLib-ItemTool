@@ -1,14 +1,13 @@
 package me.skymc.taboolib.itemtool.command;
 
 import com.google.common.collect.Maps;
-import me.skymc.taboolib.commands.builder.SimpleCommandBuilder;
-import me.skymc.taboolib.commands.internal.TCommandHandler;
-import me.skymc.taboolib.common.inject.TInject;
+import io.izzel.taboolib.module.command.TCommandHandler;
+import io.izzel.taboolib.module.command.lite.CommandBuilder;
+import io.izzel.taboolib.module.inject.TInject;
 import me.skymc.taboolib.itemtool.ItemTool;
 import me.skymc.taboolib.itemtool.util.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,8 +19,7 @@ import java.util.stream.Collectors;
 public class CommandMain {
 
     @TInject
-    private static SimpleCommandBuilder itemTool = SimpleCommandBuilder.create("itemTool", ItemTool.getInst())
-            .silence()
+    private static CommandBuilder itemTool = CommandBuilder.create("itemTool", ItemTool.getInst())
             .permission("itemTool.use")
             .execute((sender, args) -> {
                 if (args.length == 0) {
@@ -31,16 +29,9 @@ public class CommandMain {
                     Message.send(sender, "");
                     commands.forEach((key, value) -> Message.send(sender, " §7/&f" + key + " &8- &7" + value));
                     Message.send(sender, "");
-                } else if (args[0].equalsIgnoreCase("undo")) {
-                    if (!(sender instanceof Player)) {
-                        Message.send(sender, "&cCommand disabled on console.");
-                        return true;
-                    }
-
                 } else {
                     Message.send(sender, "&cInvalid arguments.");
                 }
-                return true;
             });
 
 }

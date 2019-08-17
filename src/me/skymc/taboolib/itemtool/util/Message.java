@@ -1,8 +1,7 @@
 package me.skymc.taboolib.itemtool.util;
 
-import com.ilummc.tlib.resources.TLocale;
-import me.skymc.taboolib.itemtool.ItemTool;
-import me.skymc.taboolib.sound.SoundPack;
+import io.izzel.taboolib.module.locale.TLocale;
+import io.izzel.taboolib.util.lite.SoundPack;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -11,20 +10,13 @@ import org.bukkit.command.CommandSender;
  */
 public class Message {
 
-    public static SoundPack ITEM_EDIT;
-    public static SoundPack YES;
-    public static SoundPack NO;
-
-    public static void setupSounds() {
-        ITEM_EDIT = new SoundPack(ItemTool.getConf().getString("Sounds.ITEM_EDIT"));
-        YES = new SoundPack(ItemTool.getConf().getString("Sounds.YES"));
-        NO = new SoundPack(ItemTool.getConf().getString("Sounds.NO"));
-    }
+    public static SoundPack ITEM_EDIT = new SoundPack("UI_BUTTON_CLICK-1-1");
+    public static SoundPack YES = new SoundPack("ENTITY_VILLAGER_YES-1-1");
+    public static SoundPack NO = new SoundPack("ENTITY_VILLAGER_NO-1-1");
 
     public static void send(CommandSender sender, String message) {
         if (sender.hasPermission("ItemTool.notify")) {
             sender.sendMessage(" §8[§3§k§l§o|§8] §7" + TLocale.Translate.setColored(message));
         }
     }
-
 }

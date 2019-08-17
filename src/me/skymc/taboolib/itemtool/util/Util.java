@@ -1,7 +1,7 @@
 package me.skymc.taboolib.itemtool.util;
 
 import com.google.common.collect.Maps;
-import me.skymc.taboolib.other.NumberUtils;
+import io.izzel.taboolib.util.lite.Numbers;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
@@ -52,7 +52,7 @@ public class Util {
     }
 
     public static Color randomColor() {
-        return Color.fromRGB(NumberUtils.getRandomInteger(0, 255), NumberUtils.getRandomInteger(0, 255), NumberUtils.getRandomInteger(0, 255));
+        return Color.fromRGB(Numbers.getRandomInteger(0, 255), Numbers.getRandomInteger(0, 255), Numbers.getRandomInteger(0, 255));
     }
 
     public static Color asColor(String name) {
@@ -96,7 +96,7 @@ public class Util {
         Firework entity = (Firework) location.getWorld().spawnEntity(location, EntityType.FIREWORK);
         FireworkMeta fireworkMeta = entity.getFireworkMeta();
         fireworkMeta.setPower(power);
-        fireworkMeta.addEffect(FireworkEffect.builder().flicker(NumberUtils.getRandom().nextBoolean()).trail(NumberUtils.getRandom().nextBoolean()).with(FireworkEffect.Type.values()[NumberUtils.getRandom().nextInt(FireworkEffect.Type.values().length)]).withColor(colorsArray[NumberUtils.getRandom().nextInt(colorsArray.length)]).build());
+        fireworkMeta.addEffect(FireworkEffect.builder().flicker(Numbers.getRandom().nextBoolean()).trail(Numbers.getRandom().nextBoolean()).with(FireworkEffect.Type.values()[Numbers.getRandom().nextInt(FireworkEffect.Type.values().length)]).withColor(colorsArray[Numbers.getRandom().nextInt(colorsArray.length)]).build());
         entity.setFireworkMeta(fireworkMeta);
     }
 }

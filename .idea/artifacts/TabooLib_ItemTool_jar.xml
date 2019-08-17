@@ -3,8 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/TabooLib_ItemTool_jar</output-path>
     <root id="archive" name="TabooLib-ItemTool.jar">
       <element id="module-output" name="TabooLib-ItemTool" />
-      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
-      <element id="file-copy" path="$PROJECT_DIR$/config.yml" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/plugin.yml" />
     </root>
   </artifact>
 </component>
