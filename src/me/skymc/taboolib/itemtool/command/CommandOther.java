@@ -24,16 +24,16 @@ public class CommandOther {
             .description("设置头颅皮肤")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof SkullMeta)) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "SkullOwner §8-> &f" + args[0]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "SkullOwner §8-> &f" + args[0]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     SkullMeta itemMeta = (SkullMeta) ((Player) sender).getItemInHand().getItemMeta();
                     itemMeta.setOwner(args[0]);
@@ -48,17 +48,17 @@ public class CommandOther {
             .description("设置皮革颜色")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof LeatherArmorMeta)) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Color color = Util.asColor(args[0]);
-                    Message.send(sender, "ArmorColor §8-> &f" + color.getRed() + "-" + color.getGreen() + "-" + color.getBlue());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Color color = Util.INSTANCE.asColor(args[0]);
+                    Message.INSTANCE.send(sender, "ArmorColor §8-> &f" + color.getRed() + "-" + color.getGreen() + "-" + color.getBlue());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     LeatherArmorMeta itemMeta = (LeatherArmorMeta) ((Player) sender).getItemInHand().getItemMeta();
                     itemMeta.setColor(color);

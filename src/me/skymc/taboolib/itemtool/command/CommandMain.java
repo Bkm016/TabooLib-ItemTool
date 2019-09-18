@@ -24,13 +24,13 @@ public class CommandMain {
             .execute((sender, args) -> {
                 if (args.length == 0) {
                     Map<String, String> commands = TCommandHandler.getCommandMap().getCommands().stream().filter(command -> command instanceof PluginCommand && !command.getName().equalsIgnoreCase("itemTool") && ((PluginCommand) command).getPlugin().equals(ItemTool.getInst())).collect(Collectors.toMap(Command::getName, Command::getDescription, (a, b) -> b, Maps::newTreeMap));
-                    Message.send(sender, "");
-                    Message.send(sender, "&7&l----- &f&lTabooLib ItemTool Commands &7&l-----");
-                    Message.send(sender, "");
-                    commands.forEach((key, value) -> Message.send(sender, " §7/&f" + key + " &8- &7" + value));
-                    Message.send(sender, "");
+                    Message.INSTANCE.send(sender, "");
+                    Message.INSTANCE.send(sender, "&7&l----- &f&lTabooLib ItemTool Commands &7&l-----");
+                    Message.INSTANCE.send(sender, "");
+                    commands.forEach((key, value) -> Message.INSTANCE.send(sender, " §7/&f" + key + " &8- &7" + value));
+                    Message.INSTANCE.send(sender, "");
                 } else {
-                    Message.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
                 }
             });
 

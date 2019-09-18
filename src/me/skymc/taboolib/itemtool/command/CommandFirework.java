@@ -30,16 +30,16 @@ public class CommandFirework {
             .description("设置烟花强度")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.FIREWORK) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "FireworkPower §8-> &f" + NumberConversions.toInt(args[0]));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "FireworkPower §8-> &f" + NumberConversions.toInt(args[0]));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     FireworkMeta itemMeta = (FireworkMeta) ((Player) sender).getItemInHand().getItemMeta();
                     itemMeta.setPower(NumberConversions.toInt(args[0]));
@@ -60,21 +60,21 @@ public class CommandFirework {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.FIREWORK) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 3) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (asType(args[0]) == null) {
-                    Message.send(sender, "&cInvalid FireworkEffectType.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid FireworkEffectType.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
                     FireworkEffect fireworkEffect = FireworkEffect.builder()
                             .with(asType(args[0]))
-                            .withColor(Util.asColorArray(args[1]))
-                            .withFade(Util.asColorArray(args[2]))
+                            .withColor(Util.INSTANCE.asColorArray(args[1]))
+                            .withFade(Util.INSTANCE.asColorArray(args[2]))
                             .flicker(args.length > 3 ? Numbers.getBoolean(args[3]) : false)
                             .trail(args.length > 4 ? Numbers.getBoolean(args[3]) : false)
                             .build();
@@ -82,8 +82,8 @@ public class CommandFirework {
                     itemMeta.addEffect(fireworkEffect);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                     // Message
-                    Message.send(sender, "FireworkEffect §8+ &f" + fireworkEffect);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "FireworkEffect §8+ &f" + fireworkEffect);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                 }
             });
 
@@ -94,13 +94,13 @@ public class CommandFirework {
             .description("删除烟花效果")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.FIREWORK) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "FireworkEffect §8- &6LATEST");
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "FireworkEffect §8- &6LATEST");
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     FireworkMeta itemMeta = (FireworkMeta) ((Player) sender).getItemInHand().getItemMeta();
                     if (itemMeta.getEffectsSize() > 0) {

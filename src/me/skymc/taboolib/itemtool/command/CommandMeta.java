@@ -36,22 +36,22 @@ public class CommandMeta {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (!args[0].equalsIgnoreCase("all") && Items.asEnchantment(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid Enchantment type.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid Enchantment type.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (NumberConversions.toInt(args[1]) <= 0) {
-                    Message.send(sender, "&cInvalid Enchantment level.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid Enchantment level.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Enchant §8+ &f" + args[0].toUpperCase() + ":" + args[1]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Enchant §8+ &f" + args[0].toUpperCase() + ":" + args[1]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     if (args[0].equalsIgnoreCase("all")) {
@@ -76,19 +76,19 @@ public class CommandMeta {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (!args[0].equalsIgnoreCase("all") && Items.asEnchantment(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid Enchantment type.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid Enchantment type.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Enchant §8- &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Enchant §8- &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     if (args[0].equalsIgnoreCase("all")) {
@@ -113,19 +113,19 @@ public class CommandMeta {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (!args[0].equalsIgnoreCase("all") && Items.asItemFlag(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid ItemFlag.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid ItemFlag.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Flag §8+ &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Flag §8+ &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     if (args[0].equalsIgnoreCase("all")) {
@@ -150,19 +150,19 @@ public class CommandMeta {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (!args[0].equalsIgnoreCase("all") && Items.asItemFlag(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid ItemFlag.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid ItemFlag.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Flag §8- &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Flag §8- &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     if (args[0].equalsIgnoreCase("all")) {
@@ -182,16 +182,16 @@ public class CommandMeta {
             .description("设置物品无法破坏")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Unbreakable §8-> &f" + String.valueOf(Numbers.getBoolean(args[0])).toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Unbreakable §8-> &f" + String.valueOf(Numbers.getBoolean(args[0])).toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     try {

@@ -34,13 +34,13 @@ public class CommandBlockState implements Listener {
             .description("设置箱子内容")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !ChestContents.isChest(((Player) sender).getItemInHand().getType())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "ChestContents &8-> &6EDITING");
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "ChestContents &8-> &6EDITING");
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     Inventory inventory = Bukkit.createInventory(new ChestContents(), 27, "Turn in Items");
                     BlockStateMeta itemMeta = (BlockStateMeta) ((Player) sender).getItemInHand().getItemMeta();
@@ -57,23 +57,23 @@ public class CommandBlockState implements Listener {
             .description("设置刷怪笼类型")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.MOB_SPAWNER) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
-                } else if (Util.asEntityType(args[0]) == null) {
-                    Message.send(sender, "&cInvalid EntityType.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
+                } else if (Util.INSTANCE.asEntityType(args[0]) == null) {
+                    Message.INSTANCE.send(sender, "&cInvalid EntityType.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "SpawnerType &8-> &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "SpawnerType &8-> &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     BlockStateMeta itemMeta = (BlockStateMeta) ((Player) sender).getItemInHand().getItemMeta();
                     CreatureSpawner blockState = (CreatureSpawner) itemMeta.getBlockState();
-                    blockState.setSpawnedType(Util.asEntityType(args[0]));
+                    blockState.setSpawnedType(Util.INSTANCE.asEntityType(args[0]));
                     itemMeta.setBlockState(blockState);
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                 }
@@ -85,19 +85,19 @@ public class CommandBlockState implements Listener {
             .description("设置刷怪笼间隔")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || ((Player) sender).getItemInHand().getType() != Material.MOB_SPAWNER) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (NumberConversions.toInt(args[0]) < 0) {
-                    Message.send(sender, "&cInvalid delay number.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid delay number.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "SpawnerDelay &8-> &f" + args[0]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "SpawnerDelay &8-> &f" + args[0]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     BlockStateMeta itemMeta = (BlockStateMeta) ((Player) sender).getItemInHand().getItemMeta();
                     CreatureSpawner blockState = (CreatureSpawner) itemMeta.getBlockState();
@@ -111,11 +111,11 @@ public class CommandBlockState implements Listener {
     public void onClose(InventoryCloseEvent e) {
         if (e.getInventory().getHolder() instanceof ChestContents) {
             if (!ChestContents.isChest(e.getPlayer().getItemInHand().getType())) {
-                Message.send(e.getPlayer(), "&cInvalid item.");
-                Message.NO.play((Player) e.getPlayer());
+                Message.INSTANCE.send(e.getPlayer(), "&cInvalid item.");
+                Message.INSTANCE.getNO().play((Player) e.getPlayer());
             } else {
-                Message.send(e.getPlayer(), "ChestContents &8-> &aSAVED");
-                Message.ITEM_EDIT.play((Player) e.getPlayer());
+                Message.INSTANCE.send(e.getPlayer(), "ChestContents &8-> &aSAVED");
+                Message.INSTANCE.getITEM_EDIT().play((Player) e.getPlayer());
                 // Action
                 BlockStateMeta itemMeta = (BlockStateMeta) e.getPlayer().getItemInHand().getItemMeta();
                 Chest blockState = (Chest) itemMeta.getBlockState();

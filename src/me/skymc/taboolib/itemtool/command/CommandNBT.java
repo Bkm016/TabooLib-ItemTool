@@ -21,14 +21,14 @@ public class CommandNBT {
             .description("查看物品详细 NBT 节点")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.YES.play((Player) sender);
+                    Message.INSTANCE.getYES().play((Player) sender);
                     // Action
-                    AsmHandler.getAsmHandler().sendItemNBT((Player) sender, ((Player) sender).getItemInHand());
+                    AsmHandler.Companion.getAsmHandler().sendItemNBT((Player) sender, ((Player) sender).getItemInHand());
                 }
             });
 
@@ -40,15 +40,15 @@ public class CommandNBT {
             .description("移除物品所有 NBT 节点")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "NBT &8-> &4CLEAR");
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "NBT &8-> &4CLEAR");
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
-                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().clearNBT(((Player) sender).getItemInHand()));
+                    ((Player) sender).setItemInHand(AsmHandler.Companion.getAsmHandler().clearNBT(((Player) sender).getItemInHand()));
                 }
             });
 }

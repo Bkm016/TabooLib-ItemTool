@@ -23,19 +23,19 @@ public class CommandMaterial {
             .description("设置物品材质")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (Items.asMaterial(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid Material.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid Material.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Material §8-> &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Material §8-> &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ((Player) sender).getItemInHand().setType(Items.asMaterial(args[0].toUpperCase()));
                 }
@@ -49,19 +49,19 @@ public class CommandMaterial {
             .description("设置物品耐久")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
-                } else if (!Util.isNumber(args[0])) {
-                    Message.send(sender, "&cInvalid number.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
+                } else if (!Util.INSTANCE.isNumber(args[0])) {
+                    Message.INSTANCE.send(sender, "&cInvalid number.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Durability §8-> &f" + args[0]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Durability §8-> &f" + args[0]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ((Player) sender).getItemInHand().setDurability(NumberConversions.toShort(args[0]));
                 }
@@ -74,19 +74,19 @@ public class CommandMaterial {
             .description("设置物品数量")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
-                } else if (!Util.isNumber(args[0])) {
-                    Message.send(sender, "&cInvalid number.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
+                } else if (!Util.INSTANCE.isNumber(args[0])) {
+                    Message.INSTANCE.send(sender, "&cInvalid number.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Amount §8-> &f" + args[0]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Amount §8-> &f" + args[0]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ((Player) sender).getItemInHand().setAmount(NumberConversions.toInt(args[0]));
                 }

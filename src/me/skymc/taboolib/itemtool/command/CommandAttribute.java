@@ -43,21 +43,21 @@ public class CommandAttribute {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 3) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (Items.asAttribute(args[0]) == null) {
-                    Message.send(sender, "&cInvalid Attribtue.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid Attribtue.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Attribute &8+ &f" + args[0].toUpperCase() + ":" + args[1].toUpperCase() + ":" + args[2]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Attribute &8+ &f" + args[0].toUpperCase() + ":" + args[1].toUpperCase() + ":" + args[2]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
-                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().addAttribute(((Player) sender).getItemInHand(), Items.asAttribute(args[0]), args[2], args[1].toLowerCase()));
+                    ((Player) sender).setItemInHand(AsmHandler.Companion.getAsmHandler().addAttribute(((Player) sender).getItemInHand(), Items.asAttribute(args[0]), args[2], args[1].toLowerCase()));
                 }
             });
 
@@ -74,21 +74,21 @@ public class CommandAttribute {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (Items.asAttribute(args[0]) == null) {
-                    Message.send(sender, "&cInvalid Attribtue.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid Attribtue.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Attribute &8- &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Attribute &8- &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
-                    ((Player) sender).setItemInHand(AsmHandler.getAsmHandler().removeAttribtue(((Player) sender).getItemInHand(), Items.asAttribute(args[0])));
+                    ((Player) sender).setItemInHand(AsmHandler.Companion.getAsmHandler().removeAttribtue(((Player) sender).getItemInHand(), Items.asAttribute(args[0])));
                 }
             });
 }

@@ -39,25 +39,25 @@ public class CommandPotion {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 3) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (Items.asPotionEffectType(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid PotionEffect type.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid PotionEffect type.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (NumberConversions.toInt(args[1]) <= 0) {
-                    Message.send(sender, "&cInvalid PotionEffect duration.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid PotionEffect duration.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (NumberConversions.toInt(args[2]) < 0) {
-                    Message.send(sender, "&cInvalid PotionEffect amplifier.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid PotionEffect amplifier.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "PotionEffect §8+ &f" + args[0].toUpperCase() + ":" + args[1] + ":" + args[2]);
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "PotionEffect §8+ &f" + args[0].toUpperCase() + ":" + args[1] + ":" + args[2]);
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     PotionMeta itemMeta = (PotionMeta) ((Player) sender).getItemInHand().getItemMeta();
                     itemMeta.addCustomEffect(new PotionEffect(Items.asPotionEffectType(args[0].toUpperCase()), NumberConversions.toInt(args[1]), NumberConversions.toInt(args[2])), true);
@@ -78,19 +78,19 @@ public class CommandPotion {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (!args[0].equalsIgnoreCase("all") && Items.asPotionEffectType(args[0].toUpperCase()) == null) {
-                    Message.send(sender, "&cInvalid PotionEffect type.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid PotionEffect type.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "PotionEffect §8- &f" + args[0].toUpperCase());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "PotionEffect §8- &f" + args[0].toUpperCase());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     PotionMeta itemMeta = (PotionMeta) ((Player) sender).getItemInHand().getItemMeta();
                     if (args[0].equalsIgnoreCase("all")) {
@@ -109,16 +109,16 @@ public class CommandPotion {
             .description("设置药水颜色")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
-                } else if (Util.asColor(args[0]) == null) {
-                    Message.send(sender, "&cInvalid PotionEffect color.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
+                } else if (Util.INSTANCE.asColor(args[0]) == null) {
+                    Message.INSTANCE.send(sender, "&cInvalid PotionEffect color.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
                     Color color;
                     if (args[0].equalsIgnoreCase("r") || args[0].equalsIgnoreCase("random")) {
@@ -133,8 +133,8 @@ public class CommandPotion {
                     }
                     ((Player) sender).getItemInHand().setItemMeta(itemMeta);
                     // Message
-                    Message.send(sender, "PotionColor §8-> &f" + color.getBlue() + "-" + color.getGreen() + "-" + color.getRed());
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "PotionColor §8-> &f" + color.getBlue() + "-" + color.getGreen() + "-" + color.getRed());
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                 }
             });
 
@@ -152,36 +152,36 @@ public class CommandPotion {
             })
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand()) || !(((Player) sender).getItemInHand().getItemMeta() instanceof PotionMeta)) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 3) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (PotionType.getByEffect(Items.asPotionEffectType(args[0].toUpperCase())) == null) {
-                    Message.send(sender, "&cInvalid PotionEffect type.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid PotionEffect type.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
                     PotionMeta itemMeta = (PotionMeta) ((Player) sender).getItemInHand().getItemMeta();
                     try {
                         itemMeta.setBasePotionData(new PotionData(PotionType.getByEffect(Items.asPotionEffectType(args[0].toUpperCase())), Numbers.getBoolean(args[1]), Numbers.getBoolean(args[2])));
                         // Notify
-                        Message.send(sender, "BasePotionEffect §8-> &f" + args[0].toUpperCase() + ":" + args[1] + ":" + args[2]);
-                        Message.ITEM_EDIT.play((Player) sender);
+                        Message.INSTANCE.send(sender, "BasePotionEffect §8-> &f" + args[0].toUpperCase() + ":" + args[1] + ":" + args[2]);
+                        Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     } catch (Throwable e) {
                         switch (e.getMessage()) {
                             case "Potion Type is not upgradable":
-                                Message.send(sender, "&cPotion Type is not upgradable");
-                                Message.NO.play((Player) sender);
+                                Message.INSTANCE.send(sender, "&cPotion Type is not upgradable");
+                                Message.INSTANCE.getNO().play((Player) sender);
                                 break;
                             case "Potion Type is not extendable":
-                                Message.send(sender, "&cPotion Type is not extendable");
-                                Message.NO.play((Player) sender);
+                                Message.INSTANCE.send(sender, "&cPotion Type is not extendable");
+                                Message.INSTANCE.getNO().play((Player) sender);
                                 break;
                             case "Potion cannot be both extended and upgraded":
-                                Message.send(sender, "&cPotion cannot be both extended and upgraded");
-                                Message.NO.play((Player) sender);
+                                Message.INSTANCE.send(sender, "&cPotion cannot be both extended and upgraded");
+                                Message.INSTANCE.getNO().play((Player) sender);
                                 break;
                             default:
                                 try {
@@ -189,8 +189,8 @@ public class CommandPotion {
                                 } catch (Throwable ignored2) {
                                 }
                                 // Notify
-                                Message.send(sender, "BasePotionEffect §8-> &f" + args[0].toUpperCase());
-                                Message.ITEM_EDIT.play((Player) sender);
+                                Message.INSTANCE.send(sender, "BasePotionEffect §8-> &f" + args[0].toUpperCase());
+                                Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                                 break;
                         }
                     }

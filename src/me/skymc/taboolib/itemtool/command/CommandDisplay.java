@@ -29,16 +29,16 @@ public class CommandDisplay {
             .description("设置物品名称")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Name §8-> &f" + ArrayUtil.arrayJoin(args, 0));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Name §8-> &f" + ArrayUtil.arrayJoin(args, 0));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     itemMeta.setDisplayName(TLocale.Translate.setColored(ArrayUtil.arrayJoin(args, 0)));
@@ -53,16 +53,16 @@ public class CommandDisplay {
             .description("替换物品名称")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -81,16 +81,16 @@ public class CommandDisplay {
             .description("替换物品名称（Regex）")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Name:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -109,16 +109,16 @@ public class CommandDisplay {
             .description("添加物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore §8+ &f" + ArrayUtil.arrayJoin(args, 0));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Lore §8+ &f" + ArrayUtil.arrayJoin(args, 0));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -135,19 +135,19 @@ public class CommandDisplay {
             .description("插入物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
-                } else if (!Util.isNumber(args[0]) ||  NumberConversions.toInt(args[0]) < 1) {
-                    Message.send(sender, "&cInvalid line.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
+                } else if (!Util.INSTANCE.isNumber(args[0]) ||  NumberConversions.toInt(args[0]) < 1) {
+                    Message.INSTANCE.send(sender, "&cInvalid line.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8+ &f" + ArrayUtil.arrayJoin(args, 1));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8+ &f" + ArrayUtil.arrayJoin(args, 1));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -171,19 +171,19 @@ public class CommandDisplay {
             .description("设置物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (NumberConversions.toInt(args[0]) == 0) {
-                    Message.send(sender, "&cInvalid line.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid line.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8-> &f" + ArrayUtil.arrayJoin(args, 1));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8-> &f" + ArrayUtil.arrayJoin(args, 1));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -203,19 +203,19 @@ public class CommandDisplay {
             .description("移除物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length == 0) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (NumberConversions.toInt(args[0]) == 0) {
-                    Message.send(sender, "&cInvalid line.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid line.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8-> &4REMOVE");
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Line:" + NumberConversions.toInt(args[0]) + " §8-> &4REMOVE");
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -234,16 +234,16 @@ public class CommandDisplay {
             .description("替换物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -262,16 +262,16 @@ public class CommandDisplay {
             .description("替换物品描述（Regex）")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else if (args.length < 2) {
-                    Message.send(sender, "&cInvalid arguments.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid arguments.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Lore:" + args[0] + "&r &8-> &f" + ArrayUtil.arrayJoin(args, 1));
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
@@ -291,13 +291,13 @@ public class CommandDisplay {
             .description("清除物品描述")
             .execute((sender, args) -> {
                 if (!(sender instanceof Player)) {
-                    Message.send(sender, "&cCommand disabled on console.");
+                    Message.INSTANCE.send(sender, "&cCommand disabled on console.");
                 } else if (Items.isNull(((Player) sender).getItemInHand())) {
-                    Message.send(sender, "&cInvalid item.");
-                    Message.NO.play((Player) sender);
+                    Message.INSTANCE.send(sender, "&cInvalid item.");
+                    Message.INSTANCE.getNO().play((Player) sender);
                 } else {
-                    Message.send(sender, "Lore &8-> &4CLEAR");
-                    Message.ITEM_EDIT.play((Player) sender);
+                    Message.INSTANCE.send(sender, "Lore &8-> &4CLEAR");
+                    Message.INSTANCE.getITEM_EDIT().play((Player) sender);
                     // Action
                     ItemMeta itemMeta = ((Player) sender).getItemInHand().getItemMeta();
                     itemMeta.setLore(new ArrayList<>());
